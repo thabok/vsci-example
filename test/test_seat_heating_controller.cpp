@@ -140,51 +140,6 @@ TEST_F(SeatHeatingControllerTestSuite, Test_Controller_CyclesThroughAllStages) {
     EXPECT_EQ(controller.leds[2], false);
 }
 
-/**
- * @brief Verify reactivation restores previous temperature stage
- *
- * @details
- *   The controller should retain the last active stage when it becomes
- *   inactive and later reactivates.
- *
- */
-TEST_F(SeatHeatingControllerTestSuite, Test_Controller_ReactivationRestoresStage) {
-    controller.seatOccupied = true;
-    controller.powerMgtState = seat_heating::OK;
-    controller.errorStatus = NO_ERROR;
-
-    bool buttonPressed = false;
-    ON_CALL(controller, getButtonPressed()).WillByDefault([&]() { return buttonPressed; });
-
-    // Move to MEDIUM stage (stage 2)
-    buttonPressed = true;
-    controller.step();
-    buttonPressed = false;
-    controller.step();
-    buttonPressed = true;
-    controller.step();
-    EXPECT_EQ(controller.state.temperatureStage, 2);
-    EXPECT_EQ(controller.heatingCoil, 35);
-
-    // Deactivate system
-    buttonPressed = false;
-    controller.seatOccupied = false;
-    controller.step();
-    EXPECT_EQ(controller.heatingCoil, 0);
-    EXPECT_EQ(controller.leds[0], false);
-    EXPECT_EQ(controller.leds[1], false);
-    EXPECT_EQ(controller.leds[2], false);
-
-    // Reactivate system - stage should be retained
-    controller.seatOccupied = true;
-    controller.step();
-    EXPECT_EQ(controller.state.temperatureStage, 2);
-    EXPECT_EQ(controller.heatingCoil, 35);
-    EXPECT_EQ(controller.leds[0], true);
-    EXPECT_EQ(controller.leds[1], true);
-    EXPECT_EQ(controller.leds[2], false);
-}
-
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

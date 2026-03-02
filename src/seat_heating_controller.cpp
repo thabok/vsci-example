@@ -18,7 +18,7 @@ namespace seat_heating {
 void SeatHeatingController::step() {
     if (check_conditions(seatOccupied, powerMgtState, errorStatus)) {
         if (!state.prevButtonPressed && getButtonPressed()) {
-            state.temperatureStage = (state.temperatureStage + 1) % 3;
+            state.temperatureStage = (state.temperatureStage + 1) % 4;
         }
         if (state.temperatureStage == 0) {
             heatingCoil = 0;
