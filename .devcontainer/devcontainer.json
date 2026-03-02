@@ -1,0 +1,22 @@
+{
+    "name": "C++ Seat Heating Controller",
+    "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu-22.04",
+    "runArgs": [ ],
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cpptools-extension-pack",
+                "ms-vscode.cmake-tools"
+            ],
+            "settings": {
+                "cmake.ctest.testExplorerIntegrationEnabled": true,
+                "cmake.configureOnOpen": true,
+                "cmake.useCMakePresets": "always",
+                "cmake.configurePreset": "dev-debug",
+                "cmake.buildPreset": "dev-debug",
+                "cmake.testPreset": "dev-debug",
+                "cmake.options.statusBarVisibility": "hidden"
+            }
+        }
+    }
+}
