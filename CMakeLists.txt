@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(seat_heating_controller_cpp LANGUAGES C CXX)
+project(seat_heating_controller LANGUAGES C CXX)
 
 # C/C++ standard and compiler settings
 set(CMAKE_C_STANDARD 17)
@@ -21,11 +21,12 @@ set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
 
 # Sources and headers
 set(SOURCES
-  "${SRC_DIR}/seat_heating_controller.cpp"
+  "${SRC_DIR}/seat_heating_controller.c"
 )
 
 set(PUBLIC_HEADERS
   "${INC_DIR}/seat_heating_controller.h"
+  "${INC_DIR}/types.h"
 )
 
 # --- Static library target ---
@@ -39,6 +40,7 @@ add_library(seat_heating STATIC
 # INSTALL_INTERFACE: used after installation
 target_include_directories(seat_heating
   PUBLIC
+    $<BUILD_INTERFACE:${SRC_DIR}>
     $<BUILD_INTERFACE:${INC_DIR}>
     $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
 )
@@ -111,13 +113,13 @@ if(BUILD_TESTING)
     PRIVATE
       seat_heating::seat_heating
       gtest
-      gmock
       gtest_main
   )
   
   # Include directories for tests
   target_include_directories(seat_heating_tests
     PRIVATE
+      ${SRC_DIR}
       ${INC_DIR}
   )
   
@@ -125,7 +127,7 @@ if(BUILD_TESTING)
   gtest_discover_tests(seat_heating_tests)
   
   # Add custom target for running tests
-  add_custom_target(run_cpp_tests
+  add_custom_target(run_c_tests
     COMMAND seat_heating_tests
     DEPENDS seat_heating_tests
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -153,7 +155,7 @@ if(BUILD_TESTING)
                   --exclude-unreachable-branches
                   --exclude-throw-branches
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-          DEPENDS run_cpp_tests
+          DEPENDS run_c_tests
           COMMENT "Generating code coverage report..."
         )
       endif()
@@ -176,4 +178,3 @@ if(BUILD_TESTING AND ENABLE_COVERAGE)
   message(STATUS "Code coverage: ENABLED")
 endif()
 message(STATUS "========================================")
-

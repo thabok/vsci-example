@@ -1,43 +1,27 @@
-#pragma once
-#include <array>
-#include <cstdint>
+#ifndef SEAT_HEATING_CONTROLLER_H_
+#define SEAT_HEATING_CONTROLLER_H_
+
 #include "types.h"
 
-namespace seat_heating {
+// -------------- VARIABLES ------------
+extern tBool seatOccupied;
+extern tPowerMgtState powerMgtState;
+extern tErrorStatus errorStatus;
+extern tTemperature heatingCoil;
+extern tBool leds[3];
 
-using tBool = bool;
-enum tPowerMgtState { NOK, OK };
-using tErrorStatus = char;
-using tPower = float;
+extern tState state;    
+extern tBool getButtonPressed_stub;
 
-struct tState {
-    tBool prevButtonPressed;
-    uint8_t temperatureStage;
-};
+// -------------- FUNCTIONS ------------
+// internal
+void seat_heating_controller(void);
+tBool check_conditions(tBool seatStatus, tPowerMgtState pwMgtstate, tErrorStatus errStatus);
+tTemperature handle_temperature_stage(int temperatureStage);
+// Returns requested power (0-100) based on temperature difference
+float request_power(tTemperature currentTemp, tTemperature requestedTemp);
 
-struct tTemperatureParams {
-    tTemperature low;
-    tTemperature medium;
-    tTemperature high;
-};
+// external
+extern tBool getButtonPressed();
 
-class SeatHeatingController {
-public:
-    tBool seatOccupied = false;
-    tPowerMgtState powerMgtState = NOK;
-    tErrorStatus errorStatus = INVALID;
-    tTemperature heatingCoil = 0;
-    std::array<tBool, 3> leds = { false, false, false };
-    tState state = { false, 0 };
-    tTemperatureParams TemperatureParams = { 30, 35, 45 };
-    tTemperature currentTemp = 0;
-    tPower requestedPower = 0;
-
-    // Default stub: always returns false, override in test
-    virtual tBool getButtonPressed() { return false; }
-    void step();
-    static tBool check_conditions(tBool seatStatus, tPowerMgtState pwMgtstate, tErrorStatus errStatus);
-    static tPower request_power(tTemperature currentTemp, tTemperature requestedTemp);
-};
-
-} // namespace seat_heating
+#endif
