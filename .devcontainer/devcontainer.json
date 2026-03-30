@@ -1,7 +1,13 @@
 {
     "name": "C++ Seat Heating Controller",
-    "image": "mcr.microsoft.com/devcontainers/cpp:ubuntu-22.04",
-    "runArgs": [ ],
+    "build": {
+        "dockerfile": "Dockerfile",
+        "options": [
+            "--platform=linux/amd64"
+        ]
+    },
+    "postCreateCommand": "bash .devcontainer/install-btc-extensions.sh",
+    "runArgs": [],
     "customizations": {
         "vscode": {
             "extensions": [
