@@ -1,25 +1,22 @@
-// -------------- TYPEDEFS ------------
+#include <cstdint>
 
-#include <stdbool.h>
-typedef bool tBool;
+using tBool = bool;
+enum class tPowerMgtState : uint8_t { NOK, OK };
+using tErrorStatus = int8_t;
+constexpr tErrorStatus NO_ERROR = 0;
+constexpr tErrorStatus TIMEOUT = 1;
+constexpr tErrorStatus INVALID = 2;
 
-typedef enum { NOK, OK } tPowerMgtState;
-
-typedef char tErrorStatus;
-#define NO_ERROR 0
-#define TIMEOUT 1
-#define INVALID 2
-
-typedef struct {
+struct tState {
     tBool prevButtonPressed;
     unsigned char temperatureStage;
-} tState;
+};
 
-typedef unsigned char tTemperature;
-typedef float tPower;
+using tTemperature = uint8_t;
+using tPower = float;
 
-typedef struct {
+struct tTemperatureParams {
     tTemperature low;
     tTemperature medium;
     tTemperature high;
-} tTemperatureParams;
+};

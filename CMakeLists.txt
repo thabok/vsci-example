@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.31)
-project(seat_heating_controller LANGUAGES C CXX)
+project(seat_heating_controller_cpp LANGUAGES C CXX)
 
 # C/C++ standard and compiler settings
 set(CMAKE_C_STANDARD 17)
@@ -18,27 +18,20 @@ endif()
 # Source and include directories
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/include")
-set(TST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tst")
-set(STUB_DIR "${TST_DIR}/stubs")
 
 # Sources and headers
 set(SOURCES
-  "${SRC_DIR}/seat_heating_controller.c"
+  "${SRC_DIR}/seat_heating_controller.cpp"
 )
 
 set(PUBLIC_HEADERS
   "${INC_DIR}/seat_heating_controller.h"
 )
 
-set(PRIVATE_HEADERS
-  "${INC_DIR}/types.h"
-)
-
 # --- Static library target ---
 add_library(seat_heating STATIC
   ${SOURCES}
   ${PUBLIC_HEADERS}
-  ${PRIVATE_HEADERS}
 )
 
 # Include paths
@@ -100,6 +93,9 @@ if(BUILD_TESTING)
   # For Windows: Prevent overriding the parent project's compiler/linker settings
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
   
+  # Source and include directories
+  set(TST_DIR "${CMAKE_CURRENT_SOURCE_DIR}/tst")
+
   # Make GoogleTest available
   FetchContent_MakeAvailable(googletest)
   
@@ -109,7 +105,6 @@ if(BUILD_TESTING)
   # Create test executable
   add_executable(seat_heating_tests
     ${TST_DIR}/test_seat_heating_controller.cpp
-    ${STUB_DIR}/stub.c
   )
   
   # Link test executable with the library and Google Test
@@ -117,6 +112,7 @@ if(BUILD_TESTING)
     PRIVATE
       seat_heating::seat_heating
       gtest
+      gmock
       gtest_main
   )
   
@@ -125,14 +121,13 @@ if(BUILD_TESTING)
     PRIVATE
       ${SRC_DIR}
       ${INC_DIR}
-      ${STUB_DIR}
   )
   
   # Discover tests for CTest
   gtest_discover_tests(seat_heating_tests)
   
   # Add custom target for running tests
-  add_custom_target(run_c_tests
+  add_custom_target(run_cpp_tests
     COMMAND seat_heating_tests
     DEPENDS seat_heating_tests
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
@@ -160,7 +155,7 @@ if(BUILD_TESTING)
                   --exclude-unreachable-branches
                   --exclude-throw-branches
           WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
-          DEPENDS run_c_tests
+          DEPENDS run_cpp_tests
           COMMENT "Generating code coverage report..."
         )
       endif()
@@ -183,3 +178,4 @@ if(BUILD_TESTING AND ENABLE_COVERAGE)
   message(STATUS "Code coverage: ENABLED")
 endif()
 message(STATUS "========================================")
+
