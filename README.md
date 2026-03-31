@@ -47,3 +47,12 @@ This ensures code quality and catches regressions before merging.
 ## Notes
 - The sample code lives in src and include.
 - Tests are in test and run with GoogleTest.
+
+
+```
+export VSCI_ROOT="/tmp/23f9f9b8";
+export PATH=/home/vscode/.vscode-server/extensions/btces.btc-embedded-vsci-backend-26.1.0/mockcc:$PATH;
+mkdir -p "$VSCI_ROOT/build";
+rm -rf $VSCI_ROOT;
+cmake --fresh -B "$VSCI_ROOT/build";
+cmake --build "$VSCI_ROOT/build" --clean-first```

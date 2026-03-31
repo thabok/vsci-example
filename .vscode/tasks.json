@@ -1,0 +1,29 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+        {
+            "label": "Build with BTC: Incremental CMake Build w/ logging: seat_heating_controller",
+            "type": "shell",
+            "command": "mkdir -p \"$BTC_EMBEDDED_BUILD_FOLDER\"; mkdir -p \"$VSCI_ROOT\"; cmake -S \"'$BTC_EMBEDDED_BUILD_SOURCE'\" -B \"'$BTC_EMBEDDED_BUILD_FOLDER'\"; cmake --build \"'$BTC_EMBEDDED_BUILD_FOLDER'\"",
+            "presentation": {
+                "reveal": "always",
+                "panel": "new"
+            },
+            "options": {
+                "cwd": "/workspaces/vsci-example-c",
+                "env": {
+                    "VSCI_ROOT": "/tmp/23f9f9b8",
+                    "PATH": "/home/vscode/.vscode-server/extensions/btces.btc-embedded-vsci-backend-26.1.0/mockcc:${env:PATH}",
+                    "BTC_EMBEDDED_BUILD_SOURCE": "/workspaces/vsci-example-c",
+                    "BTC_EMBEDDED_BUILD_FOLDER": "/workspaces/vsci-example-c/build"
+                }
+            },
+            "isBackground": false,
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
