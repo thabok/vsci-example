@@ -39,8 +39,8 @@ set -euo pipefail
 
 # workaround because code executable is not in PATH when running this script, we need to find it first
 export code="$(ls ~/.vscode-server*/bin/*/bin/code-server* | head -n 1)"
-$code --install-extension ".devcontainer/btc-extensions/jre.vsix"      --force
-$code --install-extension ".devcontainer/btc-extensions/backend.vsix"  --force
-$code --install-extension ".devcontainer/btc-extensions/frontend.vsix" --force
+$code --install-extension ".devcontainer/btc-extensions/btc.teststack-jre-26.1.0-beta.1617.vsix"            --force
+$code --install-extension ".devcontainer/btc-extensions/btc.teststack-servicedaemon-26.1.0-beta.1617.vsix"  --force
+$code --install-extension ".devcontainer/btc-extensions/btc.teststack-26.1.0-beta.1617.vsix"                --force
 
 echo "BTC extension installation complete."
