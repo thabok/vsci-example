@@ -2,3 +2,5 @@
 build/
 .btc/
 *.vsix
+.vscode/
+.DS_Store
