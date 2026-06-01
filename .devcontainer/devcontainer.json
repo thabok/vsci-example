@@ -6,7 +6,7 @@
             "--platform=linux/amd64"
         ]
     },
-    "postCreateCommand": "bash .devcontainer/install-btc-extensions.sh",
+    "postCreateCommand": "bash .devcontainer/install-btc-teststack.sh",
     "runArgs": [],
     "customizations": {
         "vscode": {
@@ -15,7 +15,7 @@
                 "ms-vscode.cmake-tools"
             ],
             "settings": {
-                "cmake.ctest.testExplorerIntegrationEnabled": true,
+                "cmake.ctest.testExplorerIntegrationEnabled": false,
                 "cmake.configureOnOpen": true,
                 "cmake.useCMakePresets": "always",
                 "cmake.configurePreset": "dev-debug",
