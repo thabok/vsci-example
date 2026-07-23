@@ -46,7 +46,6 @@ protected:
 /**
  * @brief Verify activation conditions logic
  */
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-79)
 TEST_F(SeatHeatingControllerTestSuite, CheckConditions_AllConditionsTrue) {
     EXPECT_TRUE(SeatHeatingController::check_conditions(true, OK, NO_ERROR));
 }
@@ -54,7 +53,6 @@ TEST_F(SeatHeatingControllerTestSuite, CheckConditions_AllConditionsTrue) {
 /**
  * @brief Verify activation conditions fail when seat unoccupied
  */
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-79)
 TEST_F(SeatHeatingControllerTestSuite, CheckConditions_SeatUnoccupied) {
     EXPECT_FALSE(SeatHeatingController::check_conditions(false, OK, NO_ERROR));
 }
@@ -69,7 +67,6 @@ TEST_F(SeatHeatingControllerTestSuite, CheckConditions_SeatUnoccupied) {
 /**
  * @brief Verify activation conditions fail when error flag set
  */
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-79)
 TEST_F(SeatHeatingControllerTestSuite, CheckConditions_ErrorSet) {
     EXPECT_FALSE(SeatHeatingController::check_conditions(true, OK, INVALID));
 }
@@ -82,12 +79,6 @@ TEST_F(SeatHeatingControllerTestSuite, CheckConditions_ErrorSet) {
  *   Validates initial NO HEATING state and cycling through HIGH, MEDIUM,
  *   and LOW stages on successive button presses.
  */
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-81)
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-82)
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-83)
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-84)
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-85)
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-86)
 TEST_F(SeatHeatingControllerTestSuite, Controller_CyclesThroughAllStages) {
     controller.seatOccupied = true;
     controller.powerMgtState = seat_heating::OK;
@@ -161,7 +152,6 @@ TEST_F(SeatHeatingControllerTestSuite, Controller_CyclesThroughAllStages) {
  *   The controller should retain the last active stage when it becomes
  *   inactive and later reactivates.
  */
-// BTC_LINK_TO_REQ(subterra:data-service:objects:/default/seatheater${WorkItem}SEAT-80)
 TEST_F(SeatHeatingControllerTestSuite, Controller_ReactivationRestoresStage) {
     controller.seatOccupied = true;
     controller.powerMgtState = seat_heating::OK;
