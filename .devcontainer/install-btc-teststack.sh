@@ -1,8 +1,10 @@
 set -euo pipefail
 
+#https://www.btc-embedded.com/downloads/software/btc.teststack-vscode.26.1.6-beta-linux.zip
+
 # Download and extract BTC TestStack extensions
-btc_version="26.1.2-beta.2520"
-archive="btc.teststack-${btc_version}-linux.zip"
+btc_version="26.1.6-beta"
+archive="btc.teststack-vscode.${btc_version}-linux.zip"
 ext_dir="./.devcontainer/btc-extensions"
 
 if [ "$(ls .devcontainer/btc-extensions/*.vsix 2>/dev/null | wc -l)" -lt 1 ]; then
